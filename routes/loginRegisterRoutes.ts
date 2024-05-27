@@ -8,12 +8,12 @@ const router = express.Router();
 
 router.put("/login", async (req, res) => {
   const { email, password } = req.body;
-  res.header("Access-Control-Allow-Origin", "*");
   const user = await UserModel.findOne({ email, password });
   if (user) {
     const jwtToken = jwt.sign(
       { email: email, exp: Math.floor(Date.now() / 1000) + 60 * 60 },
-      process.env.JWT_SECRET_KEY as string
+      (process.env.JWT_SECRET_KEY as string) ||
+        "my-32-character-ultra-secure-and-ultra-long-secret"
     );
     res.json({ message: "Welcome back!", token: jwtToken, user: user });
   } else {
