@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.put("/login", async (req, res) => {
   const { email, password } = req.body;
+  res.header("Access-Control-Allow-Origin", "*");
   const user = await UserModel.findOne({ email, password });
   if (user) {
     const jwtToken = jwt.sign(
