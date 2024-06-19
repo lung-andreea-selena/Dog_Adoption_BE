@@ -5,6 +5,7 @@ import {PossessionRepository} from '../repository/PossessionRepo';
 export const possessions = new PossessionRepository();
 
 export const getPossessions = async (req: Request, res: Response) => {
+    console.log('Getting possessions');
     try {
         const allPossession = await possessions.getPossessions();
         res.json(allPossession);

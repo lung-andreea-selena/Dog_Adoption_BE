@@ -8,17 +8,19 @@ export const verifyToken = (
   next: NextFunction
 ) => {
   const token = req.header("Authorization");
+  console.log("Token recieved: ", token);
   if (!token) {
     return res.status(401).json({ message: "No token provided!" });
   }
-
-  const secretKey = process.env.JWT_SECRET_KEY as string;
+  const secretKey = "my-32-character-ultra-secure-and-ultra-long-secret";
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
+      console.error("Error verifying token: ", err);
       return res.status(401).json({ message: "Failed to authenticate token!" });
     }
 
     req.body.userEmail = (decoded as { email: string }).email;
+    console.log("User email: ", req.body.userEmail);
     next();
   });
 };
