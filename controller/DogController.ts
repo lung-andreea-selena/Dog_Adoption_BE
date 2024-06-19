@@ -6,6 +6,7 @@ import {DogRepository} from '../repository/DogRepo';
 export const dogs = new DogRepository();
 
 export const getDogs = async (req: Request, res: Response) => {
+    console.log('Getting dogs');
     try {
         const allDogs = await dogs.getDogs();
         res.json(allDogs);
